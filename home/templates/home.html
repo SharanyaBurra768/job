@@ -213,24 +213,35 @@
 </head>
 <body>
 
-    <!-- Header -->
-    <header>
-        <h1>Job Portal</h1>
-        <p>Your next job is just a search away!</p>
-        <div class="search-container">
-            <form method="GET">
-                <input type="text" name="keyword" placeholder="Search for jobs" value="{{ keyword }}">
-                <input type="text" name="location" placeholder="Location" value="{{ location }}">
-                <select name="job_type">
-                    <option value="">Select Job Type</option>
-                    <option value="Full-time" {% if job_type == 'Full-time' %}selected{% endif %}>Full-time</option>
-                    <option value="Part-time" {% if job_type == 'Part-time' %}selected{% endif %}>Part-time</option>
-                    <option value="Remote" {% if job_type == 'Remote' %}selected{% endif %}>Remote</option>
-                </select>
-                <button type="submit">Apply Filters</button>
-            </form>
-        </div>
-    </header>
+   <!-- Header -->
+<header>
+    <nav style="position: absolute; top: 20px; right: 20px; z-index: 2;">
+        {% if is_logged_in %}
+            <!-- Display Logout and Username if logged in -->
+            <span style="margin-right: 15px; color: white; font-weight: bold;">Welcome, {{ username }}!</span>
+            <a href="{% url 'logout' %}" style="padding: 10px 20px; border-radius: 5px; background-color: #ffcc00; color: white; text-decoration: none; transition: background-color 0.3s;">Logout</a>
+        {% else %}
+            <!-- Display Login and Register if not logged in -->
+            <a href="{% url 'login' %}" style="margin-right: 15px; padding: 10px 20px; border-radius: 5px; background-color: #0044cc; color: white; text-decoration: none; transition: background-color 0.3s;">Login</a>
+            <a href="{% url 'register' %}" style="padding: 10px 20px; border-radius: 5px; background-color: #ffcc00; color: white; text-decoration: none; transition: background-color 0.3s;">Register</a>
+        {% endif %}
+    </nav>
+    <h1>Job Portal</h1>
+    <p>Your next job is just a search away!</p>
+    <div class="search-container">
+        <form method="GET">
+            <input type="text" name="keyword" placeholder="Search for jobs" value="{{ keyword }}">
+            <input type="text" name="location" placeholder="Location" value="{{ location }}">
+            <select name="job_type">
+                <option value="">Select Job Type</option>
+                <option value="Full-time" {% if job_type == 'Full-time' %}selected{% endif %}>Full-time</option>
+                <option value="Part-time" {% if job_type == 'Part-time' %}selected{% endif %}>Part-time</option>
+                <option value="Remote" {% if job_type == 'Remote' %}selected{% endif %}>Remote</option>
+            </select>
+            <button type="submit">Apply Filters</button>
+        </form>
+    </div>
+</header>
 
     <!-- Main Content -->
    <div class="main-content">

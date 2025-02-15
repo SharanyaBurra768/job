@@ -3,7 +3,8 @@ from pymongo import MongoClient
 from datetime import datetime
 from jobb.utils import db 
 from django.http import JsonResponse
-
+from django.shortcuts import render
+from pymongo import MongoClient
 
 def convert_objectid_to_str(doc):
     if '_id' in doc:
@@ -18,11 +19,7 @@ def convert_objectid_to_str(doc):
     return doc
 
 # Home page with search and filter functionality
-from django.shortcuts import render
-from pymongo import MongoClient
 
-# Assuming MongoDB connection is set up and you have a MongoDB client 'db'
-# Example: db = MongoClient()['your_database_name']
 
 def home_page(request):
     # Get filter parameters from the GET request
@@ -30,7 +27,6 @@ def home_page(request):
     location = request.GET.get('location', '')
     job_type = request.GET.get('job_type', '')
 
-    # Initialize the query dictionary for MongoDB filtering
     query = {}
     
     # Add filtering conditions based on the provided parameters
@@ -50,16 +46,22 @@ def home_page(request):
     else:
     	jobs = jobs_collection.find(query)
     
-    # Convert MongoDB's ObjectId to string for easier handling in the template
     jobs = [convert_objectid_to_str(job) for job in jobs]
 
     # Prepare context data to pass to the template
+    is_logged_in = 'user_id' in request.session  
+    username = None
+    if 'username' in request.session   :
+        username = request.session['username']
     context = {
         'jobs': jobs,  # List of filtered jobs
-        'keyword': keyword,  # Current keyword filter
-        'location': location,  # Current location filter
-        'job_type': job_type,  # Current job type filter
+        'keyword': keyword, 
+        'location': location, 
+        'job_type': job_type,  
+        'is_logged_in': is_logged_in,
+        'username': username,
     }
+
 
     # Render the template with the context
     return render(request, 'home.html', context)
