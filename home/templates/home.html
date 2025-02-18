@@ -242,6 +242,140 @@
         </form>
     </div>
 </header>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Search Page - Resume Upload</title>
+    <!-- Styles -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .resume-upload {
+            text-align: center;
+            padding: 30px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin: 40px auto;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .resume-upload h2 {
+            color: #0044cc;
+        }
+
+        .upload-area {
+            border: 2px dashed #cccccc;
+            padding: 50px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .upload-area:hover {
+            background-color: #f8f8f8;
+        }
+
+        .upload-area p {
+            color: #888888;
+            margin: 0;
+        }
+
+        #fileName {
+            margin-top: 20px;
+            color: #555555;
+        }
+
+        #uploadButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #0044cc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #uploadButton:hover {
+            background-color: #003399;
+        }
+    </style>
+</head>
+<body>
+    <!-- Resume Upload Section -->
+    <div class="resume-upload">
+        <h2>Upload Your Resume</h2>
+        <div class="upload-area" id="uploadArea">
+            <p>Drag & Drop your resume here or click to upload</p>
+            <input type="file" id="resumeInput" accept=".pdf,.doc,.docx" hidden>
+        </div>
+        <div id="fileName"></div>
+        <button id="uploadButton">Upload Resume</button>
+    </div>
+
+    <!-- Script -->
+    <script>
+        const uploadArea = document.getElementById('uploadArea');
+        const resumeInput = document.getElementById('resumeInput');
+        const fileNameDisplay = document.getElementById('fileName');
+        const uploadButton = document.getElementById('uploadButton');
+        let selectedFile = null;
+
+        // Click to open file dialog
+        uploadArea.addEventListener('click', () => {
+            resumeInput.click();
+        });
+
+        // Handle file selection
+        resumeInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                selectedFile = file;
+                fileNameDisplay.textContent = `Selected: ${file.name}`;
+            }
+        });
+
+        // Drag and drop functionality
+        uploadArea.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            uploadArea.style.backgroundColor = '#f0f0f0';
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.backgroundColor = '#ffffff';
+        });
+
+        uploadArea.addEventListener('drop', (event) => {
+            event.preventDefault();
+            uploadArea.style.backgroundColor = '#ffffff';
+            const file = event.dataTransfer.files[0];
+            if (file) {
+                selectedFile = file;
+                fileNameDisplay.textContent = `Selected: ${file.name}`;
+            }
+        });
+
+        // Upload button functionality
+        uploadButton.addEventListener('click', () => {
+            if (selectedFile) {
+                alert(`Uploading: ${selectedFile.name}`);
+                // Implement your backend upload logic here (e.g., using Fetch or AJAX)
+            } else {
+                alert('Please select a file first.');
+            }
+        });
+    </script>
+</body>
+</html>
 
     <!-- Main Content -->
    <div class="main-content">
