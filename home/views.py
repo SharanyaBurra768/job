@@ -58,9 +58,9 @@ def home_page(request):
 
     jobs = []
     if len(query) == 0:
-    	jobs = list(jobs_collection.find())    
+    	jobs = list(jobs_collection.find().limit(20))    
     else:
-    	jobs = jobs_collection.find(query)
+    	jobs = jobs_collection.find(query).limit(20)
     
     jobs = [convert_objectid_to_str(job) for job in jobs]
 
@@ -79,4 +79,13 @@ def home_page(request):
 
 
     return render(request, 'home.html', context)
+
+
+def profile(request):
+    applications = db['applications']
+    data = []
+   
+    data = list(applications.find({"username": request.session['username']}))    
+
+    return render(request, 'profile.html', {'applications': data})
 
