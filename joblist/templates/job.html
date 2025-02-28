@@ -1,3 +1,4 @@
+<!-- job.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,12 +8,19 @@
 </head>
 <body>
     <h1>Job Listings</h1>
-    <ul>
-        {% for job in jobs %}
-            <li>
-                <strong>{{ job.title }}</strong> - {{ job.company }} ({{ job.location }})
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="job-listing">
+        {% if jobs %}
+            {% for job in jobs %}
+                <div class="job-card">
+                    <h3><a href="{% url 'job_detail' job.id %}">{{ job.title }}</a></h3>
+                    <p><strong>{{ job.company }}</strong></p>
+                    <p class="location">{{ job.location }}</p>
+                    <p>Salary: ${{ job.salary }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No jobs found. Please try a different search criteria!</p>
+        {% endif %}
+    </div>
 </body>
 </html>
