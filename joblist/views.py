@@ -15,13 +15,14 @@ def get_jobs(request):
 
 
 def job_detail(request, job_id):
+    print(222)
+
     jobs_collection = db['job']  
     applications_collection = db['applications']
     jobs = list(jobs_collection.find({'job_id': job_id}))  
     if request.method == 'POST':
         applicant_name = request.POST.get('applicant_name')
         applicant_email = request.POST.get('applicant_email')
-        print(88888888888888888)
 
         application = {
             'job_id': job_id,
@@ -31,7 +32,6 @@ def job_detail(request, job_id):
 
         applications_collection.insert_one(application)
 
-        print(11)
         return redirect('job_detail', job_id=job_id)
 
 

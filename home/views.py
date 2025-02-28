@@ -17,9 +17,13 @@ def convert_objectid_to_str(doc):
     return doc
 
 def job_detail(request, job_id):
+    print()
     jobs_collection = db['job']  
     applications_collection = db['applications']
-    jobs = list(jobs_collection.find({'job_id': job_id}))  
+    jobs = list(jobs_collection.find({'job_id': job_id})) 
+    if len(jobs) == 0: 
+        jobs = list(jobs_collection.find({'job_id': int(job_id)})) 
+
     if request.method == 'POST':
         if not request.session.get('username'):
             return render(request, 'home.html')
@@ -35,6 +39,7 @@ def job_detail(request, job_id):
 
         applications_collection.insert_one(application)
 
+       
         return redirect('job_detail', job_id=job_id)
 
     return render(request, 'job_detail.html', {'job': jobs[0]})
