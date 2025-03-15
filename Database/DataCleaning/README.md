@@ -19,7 +19,7 @@ This ipynb file focuses on cleaning and preprocessing a job dataset to ensure da
 2. **Remove Duplicates**: Check and drop duplicate rows.  
 3. **Handle Missing Values**: Fill missing values with mean or remove missing data.  
 4. **Detect Outliers**: Use statistical methods (IQR) to filter outliers.  
-5. **Convert Date and Time format: Convert the expiry date to understandable date and time format. 
+5. **Convert Date and Time format**: Convert the expiry date to understandable date and time format. 
 
 ## Installation  
 Install the required libraries:  
